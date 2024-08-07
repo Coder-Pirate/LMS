@@ -1,1 +1,3 @@
 {{ asset('backend/') }}
+
+{{ asset('frontend/') }}

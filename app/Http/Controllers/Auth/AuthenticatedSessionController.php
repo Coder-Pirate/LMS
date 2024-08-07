@@ -16,7 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('frontend.dashboard.login');
     }
 
     /**
@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $url = '';
-        
+
         if($request->user()->role === 'admin'){
              $url = '/admin/dashboard';
         }elseif($request->user()->role === 'instructor'){
