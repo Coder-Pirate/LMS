@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -59,7 +60,8 @@ class CategoryController extends Controller
     public function UpdateCategory(Request $request){
 
         $cat_id = $request->id;
-        
+        $category = Category::find($cat_id);
+
 
 
 
@@ -73,10 +75,15 @@ class CategoryController extends Controller
             $img = $img->resize(370,246)->save(base_path('public/upload/category/'.$name_gen));
             $save_url = 'upload/category/'.$name_gen;
 
+            if(File::exists($category->image)){
+                File::delete($category->image);
+
+            }
 
 
 
-            Category::find($cat_id)->update([
+
+            $category->update([
                 'category_name' => $request->category_name,
                 'category_slug' => strtolower(str_replace(' ','-',$request->category_name)),
                 'image' => $save_url,
@@ -91,7 +98,7 @@ class CategoryController extends Controller
 
         } else {
 
-            Category::find($cat_id)->update([
+            $category->update([
                 'category_name' => $request->category_name,
                 'category_slug' => strtolower(str_replace(' ','-',$request->category_name)),
 
