@@ -68,14 +68,17 @@
             </div>
         </div><!-- end input-box -->
         <div class="input-box">
-            <label class="label-text">Password</label>
+            <label class="label-text">Enter 8 Digite Password</label>
             <div class="form-group">
-                <input class="form-control form--control" id="password" type="password" name="password" placeholder="Username">
+                <input class="form-control form--control @error('new_password') is-invalid @enderror" id="password" type="password" name="password" placeholder="Username">
                 <span class="la la-user input-icon"></span>
+                @error('new_password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
             </div>
         </div><!-- end input-box -->
         <div class="input-box">
-            <label class="label-text">Confirm Password</label>
+            <label class="label-text">Enter 8 Digite  Confirm Password</label>
             <div class="form-group">
                 <input class="form-control form--control" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password">
                 <span class="la la-envelope input-icon"></span>
