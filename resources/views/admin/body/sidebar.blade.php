@@ -31,7 +31,7 @@
             <ul>
                 <li> <a href="{{ route('all.category') }}"><i class='bx bx-radio-circle'></i>All Category</a>
                 </li>
-                <li> <a href="{{ route('add.category') }}"><i class='bx bx-radio-circle'></i>Add Category</a>
+                <li> <a href="{{ route('all.subcategory') }}"><i class='bx bx-radio-circle'></i>All SubCategory  </a>
                 </li>
                 <li> <a href="ecommerce-add-new-products.html"><i class='bx bx-radio-circle'></i>Add New Products</a>
                 </li>
@@ -43,10 +43,10 @@
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
                 </div>
-                <div class="menu-title">Components</div>
+                <div class="menu-title">Manage Instructor</div>
             </a>
             <ul>
-                <li> <a href="component-alerts.html"><i class='bx bx-radio-circle'></i>Alerts</a>
+                <li> <a href="{{ route('all.instructor') }}"><i class='bx bx-radio-circle'></i>All Instructor</a>
                 </li>
                 <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
                 </li>

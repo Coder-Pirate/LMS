@@ -108,4 +108,71 @@ class AdminController extends Controller
 
     }// End Method
 
+    public function BecomeInstructor(){
+
+        return view('frontend.instructor.reg_instructor');
+
+    }// End Method
+
+    public function InstructorRegister(Request $request){
+
+        $request->validate([
+            'name' => ['required','string','max:255'],
+            'email' => ['required', 'string','unique:users'],
+        ]);
+
+        User::insert([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'password' =>  Hash::make($request->password),
+            'role' => 'instructor',
+            'status' => '0',
+        ]);
+
+        $notification = array(
+            'message' => 'Instructor Registed Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('instructor.login')->with($notification);
+
+    }// End Method
+
+    public function AllInstructor(){
+
+        $allinstructor = User::where('role','instructor')->latest()->get();
+        return view('admin.backend.instructor.all_instructor',compact('allinstructor'));
+    }// End Method
+
+    public function UpdateUserStatus(Request $request){
+
+        $userId = $request->input('user_id');
+        $isChecked = $request->input('is_checked',0);
+
+        $user = User::find($userId);
+        if ($user) {
+            $user->status = $isChecked;
+            $user->save();
+        }
+
+        return response()->json(['message' => 'User Status Updated Successfully']);
+
+    }// End Method
+
+
+    public function DeleteInstuctor($id){
+        User::find($id)->delete();
+
+        $notification = array(
+            'message' => 'SubCategory Deleted Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+
+
+
+    }//End Method
+
 }
