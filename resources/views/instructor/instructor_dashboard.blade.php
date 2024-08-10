@@ -27,6 +27,10 @@
 	<link rel="stylesheet" href="{{ asset('backend/assets/css/header-colors.css') }}"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
+    <link href="{{ asset('backend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+
 
 	<title>Rocker - Bootstrap 5 Admin Dashboard Template</title>
 </head>
@@ -70,6 +74,13 @@
 	<script src="{{ asset('backend/assets/js/index.js') }}"></script>
 	<!--app JS-->
 	<script src="{{ asset('backend/assets/js/app.js') }}"></script>
+
+    <script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="{{ asset('backend/assets/js/code.js') }}"></script>
+
+
 	<script>
 		new PerfectScrollbar(".app-container")
 	</script>
@@ -94,6 +105,21 @@
     }
     @endif
 </script>
+<script src="{{ asset('backend/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		  } );
+	</script>
+
+
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    <script>
+        // init Froala Editor
+        new FroalaEditor('#editor');
+    </script>
+
 
 </body>
 

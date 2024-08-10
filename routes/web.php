@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -73,7 +74,7 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::get('/delete/Insturctor/{id}','DeleteInstuctor')->name('delete.instructor');
 
 
-});
+    });
 
 });
 
@@ -92,6 +93,18 @@ Route::middleware(['auth', 'roles:instructor'])->group(function(){
     Route::post('/instructor/profile/store', [InstructorController::class, 'InstructorProfileStore'])->name('instructor.profile.store');
     Route::get('/instructor/change/password', [InstructorController::class, 'InstructorChangePassword'])->name('instructor.change.password');
     Route::post('/instructor/password/update', [InstructorController::class, 'InstructorPasswordUpdate'])->name('instructor.password.update');
+
+
+    // Instructor Course Route
+    Route::controller(CourseController::class)->group(function(){
+        Route::get('/all/course','AllCourse')->name('all.course');
+        Route::get('/add/course','AddCourse')->name('add.course');
+        Route::get('/subcategory/ajax/{category_id}','GetSubCategory');
+        Route::post('/store/course','StoreCourse')->name('store.course');
+
+
+
+    });
 
 });
 
