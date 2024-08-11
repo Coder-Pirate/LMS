@@ -38,8 +38,7 @@
             <ul>
                 <li> <a href="{{ route('all.course') }}"><i class='bx bx-radio-circle'></i>All Course</a>
                 </li>
-                <li> <a href="{{ route('add.course') }}"><i class='bx bx-radio-circle'></i>Add Course</a>
-                </li>
+                
                 <li> <a href="ecommerce-add-new-products.html"><i class='bx bx-radio-circle'></i>Add New Products</a>
                 </li>
                 <li> <a href="ecommerce-orders.html"><i class='bx bx-radio-circle'></i>Orders</a>
