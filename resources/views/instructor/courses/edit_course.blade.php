@@ -187,7 +187,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="input2" class="form-label">Course Image </label>
-                    <input class="form-control" name="course_image" type="file" id="image" value="{{ $course->course_image }}">
+                    <input class="form-control"  required="" name="course_image" type="file" id="image" value="{{ $course->course_image }}">
                 </div>
 
                 <div class="col-md-6">
