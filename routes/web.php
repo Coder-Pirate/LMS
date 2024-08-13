@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CourseController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -128,6 +129,15 @@ Route::middleware(['auth', 'roles:instructor'])->group(function(){
 
 });
 
+
+///// Route Accessable for All
+
+
 Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login');
+
+
+Route::get('/course/details/{id}/{slug}', [IndexController::class, 'CourseDetails']);
+Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryCourse']);
+Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'SubCategoryCourse']);
 
 
