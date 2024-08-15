@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 
 class AdminController extends Controller
 {
@@ -130,6 +132,7 @@ class AdminController extends Controller
             'password' =>  Hash::make($request->password),
             'role' => 'instructor',
             'status' => '0',
+            'created_at' => Carbon::now(),
         ]);
 
         $notification = array(
