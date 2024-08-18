@@ -38,7 +38,7 @@
                         <span class="student-total pl-2">540,815 students</span>
                     </div>
                 </div><!-- end d-flex -->
-                <p class="pt-2 pb-1">Created by <a href="teacher-detail.html" class="text-color hover-underline">{{ $course['user']['name'] }}</a></p>
+                <p class="pt-2 pb-1">Created by <a href="{{ route('instructor.details',$course->instructor_id) }}" class="text-color hover-underline">{{ $course['user']['name'] }}</a></p>
                 <div class="d-flex flex-wrap align-items-center">
                     <p class="pr-3 d-flex align-items-center">
                         <svg class="svg-icon-color-gray mr-1" width="16px" viewBox="0 0 24 24"><path d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
@@ -189,7 +189,7 @@
                     <div class="instructor-wrap">
                         <div class="media media-card">
                             <div class="instructor-img">
-                                <a href="teacher-detail.html" class="media-img d-block">
+                                <a href="{{ route('instructor.details',$course->instructor_id) }}" class="media-img d-block">
                                     <img class="lazy" src="{{ (!empty($course->user->photo)) ? url('upload/instructor_images/'.$course->user->photo) : url('upload/no_image.jpg')}}" data-src="images/small-avatar-1.jpg" alt="Avatar image">
                                 </a>
                                 <ul class="generic-list-item pt-3">
@@ -198,7 +198,7 @@
 
                             </div><!-- end instructor-img -->
                             <div class="media-body">
-                                <h5><a href="teacher-detail.html">{{ $course['user']['name'] }}</a></h5>
+                                <h5><a href="{{ route('instructor.details',$course->instructor_id) }}">{{ $course['user']['name'] }}</a></h5>
                                 <span class="d-block lh-18 pt-2 pb-3">Joined {{ Carbon\Carbon::parse($course->user->created_at)->diffForHumans()  }}</span>
                                 <p class="text-black lh-18 pb-3">{{ $course['user']['email'] }}</p>
                                 <p class="text-black lh-18 pb-3">{{ $course['user']['phone'] }}</p>
@@ -578,7 +578,7 @@
 <section class="related-course-area bg-gray pt-60px pb-60px">
     <div class="container">
         <div class="related-course-wrap">
-            <h3 class="fs-28 font-weight-semi-bold pb-35px">More Courses by <a href="teacher-detail.html" class="text-color hover-underline">{{ $course['user']['name'] }}</a></h3>
+            <h3 class="fs-28 font-weight-semi-bold pb-35px">More Courses by <a href="{{ route('instructor.details',$course->instructor_id) }}" class="text-color hover-underline">{{ $course['user']['name'] }}</a></h3>
             <div class="view-more-carousel-2 owl-action-styled">
 
                 @foreach ($instructorCourses  as $inscourse)
@@ -610,7 +610,7 @@
                     <div class="card-body">
                         <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">{{ $inscourse->label }}</h6>
                         <h5 class="card-title"><a href="{{ url('course/details/'.$inscourse->id.'/'.$inscourse->course_name_slug) }}">{{ $inscourse->course_name }}</a></h5>
-                        <p class="card-text"><a href="teacher-detail.html">{{ $inscourse['user']['name'] }}</a></p>
+                        <p class="card-text"><a href="{{ route('instructor.details',$course->instructor_id) }}">{{ $inscourse['user']['name'] }}</a></p>
                         <div class="rating-wrap d-flex align-items-center py-2">
                             <div class="review-stars">
                                 <span class="rating-number">4.4</span>

@@ -274,9 +274,12 @@
             </div><!-- end col-lg-4 -->
             <div class="col-lg-8">
                 <div class="row">
+                    @php
+                    $courses = App\Models\Course::where('category_id',$category->id)->where('status',1)->orderBy('id','DESC')->get();
+                @endphp
                     @foreach ($courses as $course)
     <div class="col-lg-6 responsive-column-half">
-        <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1">
+        <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1{{ $course->id }}">
             <div class="card-image">
                 <a href="{{ url('course/details/'.$course->id.'/'.$course->course_name_slug) }}" class="d-block">
                     <img class="card-img-top lazy" src="{{ asset($course->course_image) }}" data-src="images/img8.jpg" alt="Card image cap">

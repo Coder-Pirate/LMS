@@ -8,6 +8,8 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\WishListController;
+
 
 
 // Route::get('/', function () {
@@ -27,6 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('/user/change/password', [UserController::class, 'UserChangePassword'])->name('user.change.password');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
+
+    Route::controller(WishListController::class)->group(function(){
+        Route::get('/user/wishlist','AllWishlist')->name('user.wishlist');
+        Route::get('/get-wishlist-course/','GetWishlistCourse');
+        Route::get('/wishlist-remove/{id}','RemoveWishlist');
+
+
+    });
 
 });
 
@@ -140,5 +150,6 @@ Route::get('/course/details/{id}/{slug}', [IndexController::class, 'CourseDetail
 Route::get('/category/{id}/{slug}', [IndexController::class, 'CategoryCourse']);
 Route::get('/subcategory/{id}/{slug}', [IndexController::class, 'SubCategoryCourse']);
 Route::get('/instructor/details/{id}', [IndexController::class, 'InstructorDetails'])->name('instructor.details');
+Route::post('/add-to-wishlist/{course_id}', [WishListController::class, 'AddToWishList']);
 
 
