@@ -98,7 +98,7 @@ Route::controller(CouponContoller::class)->group(function(){
 
     Route::get('/admin/edit/coupon/{id}','AdminEditCoupon')->name('admin.edit.coupon');
     Route::post('/admin/update/coupon','AdminUpdateCoupon')->name('admin.update.coupon');
-    Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon'); 
+    Route::get('/admin/delete/coupon/{id}','AdminDeleteCoupon')->name('admin.delete.coupon');
 
 });
 
@@ -189,5 +189,23 @@ Route::get('/cart/data/', [CartController::class, 'CartData']);
 // Get Data from Minicart
 Route::get('/course/mini/cart/', [CartController::class, 'AddMiniCart']);
 Route::get('/minicart/course/remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+
+
+
+// Cart All Route
+Route::controller(CartController::class)->group(function(){
+    Route::get('/mycart','MyCart')->name('mycart');
+    Route::get('/get-cart-course','GetCartCourse');
+    Route::get('/cart-remove/{rowId}','CartRemove');
+
+});
+
+
+
+Route::post('/coupon-apply', [CartController::class, 'CouponApply']);
+
+
+Route::get('/coupon-calculation', [CartController::class, 'CouponCalculation']);
+Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 
 
