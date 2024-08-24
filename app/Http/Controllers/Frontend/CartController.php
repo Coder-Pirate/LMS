@@ -18,6 +18,8 @@ use App\Models\Coupon;
 use Illuminate\Support\Facades\Session;
 use App\Models\Payment;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Orderconfirm;
 
 
 class CartController extends Controller
@@ -246,7 +248,7 @@ class CartController extends Controller
         $data->status = 'pending';
         $data->created_at = Carbon::now();
         $data->save();
-        
+
         foreach ($request->course_title as $key => $course_title) {
 
             $existingOrder = Order::where('user_id',Auth::user()->id)->where('course_id',$request->course_id[$key])->first();
@@ -273,7 +275,24 @@ class CartController extends Controller
 
            $request->session()->forget('cart');
 
-            if ($request->cash_delivery == 'stripe') {
+           $paymentId = $data->id;
+
+           /// Start Send email to student ///
+           $sendmail = Payment::find($paymentId);
+           $data = [
+                'invoice_no' => $sendmail->invoice_no,
+                'amount' => $total_amount,
+                'name' => $sendmail->name,
+                'email' => $sendmail->email,
+           ];
+
+           Mail::to($request->email)->send(new Orderconfirm($data));
+
+
+           /// End Send email to student ///
+
+
+            if ($request->cash_delivery == 'stripe' || $existingOrder) {
                echo "stripe";
             }else{
 
@@ -287,6 +306,55 @@ class CartController extends Controller
 
 
     }// End Method
+
+
+    public function BuyToCart(Request $request, $id){
+
+        $course = Course::find($id);
+
+        // Check if the course is already in the cart
+        $cartItem = Cart::search(function ($cartItem, $rowId) use ($id) {
+            return $cartItem->id === $id;
+        });
+
+        if ($cartItem->isNotEmpty()) {
+            return response()->json(['error' => 'Course is already in your cart']);
+        }
+
+        if ($course->discount_price == NULL) {
+
+            Cart::add([
+                'id' => $id,
+                'name' => $request->course_name,
+                'qty' => 1,
+                'price' => $course->selling_price,
+                'weight' => 1,
+                'options' => [
+                    'image' => $course->course_image,
+                    'slug' => $request->course_name_slug,
+                    'instructor' => $request->instructor,
+                ],
+            ]);
+
+        }else{
+
+            Cart::add([
+                'id' => $id,
+                'name' => $request->course_name,
+                'qty' => 1,
+                'price' => $course->discount_price,
+                'weight' => 1,
+                'options' => [
+                    'image' => $course->course_image,
+                    'slug' => $request->course_name_slug,
+                    'instructor' => $request->instructor,
+                ],
+            ]);
+        }
+
+        return response()->json(['success' => 'Successfully Added on Your Cart']);
+
+    }// End Method 
 
 
 

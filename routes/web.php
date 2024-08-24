@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\WishListController;
+use App\Http\Controllers\Backend\SettingController;
 
 
 
@@ -183,6 +184,7 @@ Route::get('/instructor/details/{id}', [IndexController::class, 'InstructorDetai
 Route::post('/add-to-wishlist/{course_id}', [WishListController::class, 'AddToWishList']);
 
 Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+Route::post('/buy/data/store/{id}', [CartController::class, 'BuyToCart']);
 
 Route::get('/cart/data/', [CartController::class, 'CartData']);
 
@@ -211,4 +213,12 @@ Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
 /// Checkout Page Route
 Route::get('/checkout', [CartController::class, 'CheckoutCreate'])->name('checkout');
 Route::post('/payment', [CartController::class, 'Payment'])->name('payment');
+
+
+Route::controller(SettingController::class)->group(function(){
+    Route::get('/smtp/setting','SmtpSetting')->name('smtp.setting');
+    Route::post('/update/smtp','SmtpUpdate')->name('update.smtp');
+
+
+});
 
