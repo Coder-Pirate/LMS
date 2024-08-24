@@ -48,38 +48,7 @@
             <ul>
                 <li> <a href="{{ route('all.instructor') }}"><i class='bx bx-radio-circle'></i>All Instructor</a>
                 </li>
-                <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
-                </li>
-                <li> <a href="component-badges.html"><i class='bx bx-radio-circle'></i>Badges</a>
-                </li>
-                <li> <a href="component-buttons.html"><i class='bx bx-radio-circle'></i>Buttons</a>
-                </li>
-                <li> <a href="component-cards.html"><i class='bx bx-radio-circle'></i>Cards</a>
-                </li>
-                <li> <a href="component-carousels.html"><i class='bx bx-radio-circle'></i>Carousels</a>
-                </li>
-                <li> <a href="component-list-groups.html"><i class='bx bx-radio-circle'></i>List Groups</a>
-                </li>
-                <li> <a href="component-media-object.html"><i class='bx bx-radio-circle'></i>Media Objects</a>
-                </li>
-                <li> <a href="component-modals.html"><i class='bx bx-radio-circle'></i>Modals</a>
-                </li>
-                <li> <a href="component-navs-tabs.html"><i class='bx bx-radio-circle'></i>Navs & Tabs</a>
-                </li>
-                <li> <a href="component-navbar.html"><i class='bx bx-radio-circle'></i>Navbar</a>
-                </li>
-                <li> <a href="component-paginations.html"><i class='bx bx-radio-circle'></i>Pagination</a>
-                </li>
-                <li> <a href="component-popovers-tooltips.html"><i class='bx bx-radio-circle'></i>Popovers & Tooltips</a>
-                </li>
-                <li> <a href="component-progress-bars.html"><i class='bx bx-radio-circle'></i>Progress</a>
-                </li>
-                <li> <a href="component-spinners.html"><i class='bx bx-radio-circle'></i>Spinners</a>
-                </li>
-                <li> <a href="component-notifications.html"><i class='bx bx-radio-circle'></i>Notifications</a>
-                </li>
-                <li> <a href="component-avtars-chips.html"><i class='bx bx-radio-circle'></i>Avatrs & Chips</a>
-                </li>
+
             </ul>
             <li>
                 <a class="has-arrow" href="javascript:;">
@@ -116,6 +85,22 @@
                 </a>
                 <ul>
                     <li> <a href="{{ route('smtp.setting') }}"><i class='bx bx-radio-circle'></i>Manage SMPT</a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                    </div>
+                    <div class="menu-title">Manage Orders</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('admin.pending.order') }}"><i class='bx bx-radio-circle'></i>Pending Orders </a>
+                    </li>
+                    <li> <a href="{{ route('admin.confirm.order') }}"><i class='bx bx-radio-circle'></i>Confirm Orders </a>
                     </li>
 
 

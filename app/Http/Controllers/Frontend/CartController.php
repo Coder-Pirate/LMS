@@ -223,12 +223,23 @@ class CartController extends Controller
     }// End Method
 
     public function Payment(Request $request){
-
         if (Session::has('coupon')) {
            $total_amount = Session::get('coupon')['total_amount'];
         }else {
             $total_amount = round(Cart::total());
         }
+
+        $existingOrder = Order::where('user_id',Auth::user()->id)->where('course_id',$request->course_id)->first();
+
+        if ($existingOrder ) {
+
+            $notification = array(
+                'message' => 'You Have already enrolled in this course',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        } // end if
+
 
         // Cerate a new Payment Record
 
@@ -249,11 +260,14 @@ class CartController extends Controller
         $data->created_at = Carbon::now();
         $data->save();
 
-        foreach ($request->course_title as $key => $course_title) {
 
-            $existingOrder = Order::where('user_id',Auth::user()->id)->where('course_id',$request->course_id[$key])->first();
+       foreach ($request->course_title as $key => $course_title) {
 
-            if ($existingOrder) {
+            // $existingOrder = Order::where('user_id',Auth::user()->id)->where('course_id',$request->course_id[$key])->first();
+
+
+
+            if ($existingOrder ) {
 
                 $notification = array(
                     'message' => 'You Have already enrolled in this course',
@@ -275,24 +289,7 @@ class CartController extends Controller
 
            $request->session()->forget('cart');
 
-           $paymentId = $data->id;
-
-           /// Start Send email to student ///
-           $sendmail = Payment::find($paymentId);
-           $data = [
-                'invoice_no' => $sendmail->invoice_no,
-                'amount' => $total_amount,
-                'name' => $sendmail->name,
-                'email' => $sendmail->email,
-           ];
-
-           Mail::to($request->email)->send(new Orderconfirm($data));
-
-
-           /// End Send email to student ///
-
-
-            if ($request->cash_delivery == 'stripe' || $existingOrder) {
+            if ($request->cash_delivery == 'stripe') {
                echo "stripe";
             }else{
 
@@ -303,7 +300,6 @@ class CartController extends Controller
                 return redirect()->route('index')->with($notification);
 
             }
-
 
     }// End Method
 
@@ -354,7 +350,7 @@ class CartController extends Controller
 
         return response()->json(['success' => 'Successfully Added on Your Cart']);
 
-    }// End Method 
+    }// End Method
 
 
 
