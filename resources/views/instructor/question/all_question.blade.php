@@ -1,4 +1,3 @@
-
 @extends('instructor.instructor_dashboard')
 @section('instructor')
 
@@ -10,7 +9,7 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">All Orders</li>
+                    <li class="breadcrumb-item active" aria-current="page">All Question</li>
                 </ol>
             </nav>
         </div>
@@ -29,27 +28,24 @@
                     <thead>
                         <tr>
                             <th>Sl</th>
-                            <th>Date </th>
-                            <th>Invoice</th>
-                            <th>Amount</th>
-                            <th>Payment</th>
-                            <th>Status</th>
+                            <th>Course Name </th>
+                            <th>Subject</th>
+                            <th>User</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($orderItem as $key=> $item)
+                        @foreach ($question as $key=> $item)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td> {{ $item['payment']['order_date'] }} </td>
-                            <td>{{ $item['payment']['invoice_no'] }}</td>
-                            <td>{{ $item['payment']['total_amount'] }}</td>
-                            <td>{{ $item['payment']['payment_type'] }}</td>
-                            <td> <span class="badge bg-success">{{ $item['payment']['status'] }}</span> </td>
+                            <td> {{ $item['course']['course_name'] }} </td>
+                            <td>{{ $item->subject }}</td>
+                            <td>{{ $item['user']['name'] }}</td>
+                            <td>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
                             <td>
-                                <a href="{{ route('instructor.order.details',$item->payment->id) }}" class="btn btn-info" title="Edit"><i class="lni lni-eye"></i> </a>
-                                <a href="{{ route('instructor.order.invoice',$item->payment->id) }}" class="btn btn-danger"   title="Invoice"><i class="lni lni-download"></i> </a>
+                                <a href="{{ route('question.details',$item->id)  }}" class="btn btn-info" title="Edit"><i class="lni lni-eye"></i> </a>
 
                             </td>
                         </tr>

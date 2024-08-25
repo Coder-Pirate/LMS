@@ -122,6 +122,12 @@
         new FroalaEditor('#editor');
     </script>
 
+<script>
+    new PerfectScrollbar('.chat-list');
+    new PerfectScrollbar('.chat-content');
+</script>
+
+
 
 </body>
 

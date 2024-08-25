@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\OrderController;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\Backend\QuestionController;
 
 
 
@@ -26,7 +28,7 @@ Route::get('/', [UserController::class, 'Index'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('frontend.dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'roles:user', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'UserProfile'])->name('user.profile');
@@ -39,6 +41,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/wishlist', 'AllWishlist')->name('user.wishlist');
         Route::get('/get-wishlist-course/', 'GetWishlistCourse');
         Route::get('/wishlist-remove/{id}', 'RemoveWishlist');
+    });
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/my/course', 'MyCourse')->name('my.course');
+        Route::get('/course/view/{course_id}', 'CourseView')->name('course.view');
+    });
+
+    // User Question All Route
+    Route::controller(QuestionController::class)->group(function () {
+        Route::post('/user/question', 'UserQuestion')->name('user.question');
     });
 });
 
@@ -117,7 +129,7 @@ Route::middleware(['auth', 'roles:admin'])->group(function () {
     });
 });
 
-Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login')->middleware(RedirectIfAuthenticated::class);
 Route::get('/become/instructor', [AdminController::class, 'BecomeInstructor'])->name('become.instructor');
 Route::post('/instructor/register', [AdminController::class, 'InstructorRegister'])->name('instructor.register');
 
@@ -161,7 +173,16 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
 
     Route::controller(OrderController::class)->group(function () {
         Route::get('/instructor/all/order', 'InstructorAllOrder')->name('instructor.all.order');
-        Route::get('/instructor/order/details/{payment_id}','InstructorOrderDetails')->name('instructor.order.details');
+        Route::get('/instructor/order/details/{payment_id}', 'InstructorOrderDetails')->name('instructor.order.details');
+        Route::get('/instructor/order/invoice/{payment_id}', 'InstructorOrderInvoice')->name('instructor.order.invoice');
+    });
+
+
+    // Question All Order Route
+    Route::controller(QuestionController::class)->group(function () {
+        Route::get('/instructor/all/question', 'InstructorAllQuestion')->name('instructor.all.question');
+        Route::get('/question/details/{id}','QuestionDetails')->name('question.details');
+        Route::post('/instructor/replay','InstructorReplay')->name('instructor.replay');
     });
 });
 
@@ -169,7 +190,7 @@ Route::middleware(['auth', 'roles:instructor'])->group(function () {
 ///// Route Accessable for All
 
 
-Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login');
+Route::get('/instructor/login', [InstructorController::class, 'InstructorLogin'])->name('instructor.login')->middleware(RedirectIfAuthenticated::class);
 
 
 Route::get('/course/details/{id}/{slug}', [IndexController::class, 'CourseDetails']);

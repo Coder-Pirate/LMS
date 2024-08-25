@@ -27,7 +27,12 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/admin/login');
+        $notification = array(
+            'message' => 'Logout Successfully',
+            'alert-type' => 'info'
+        );
+
+        return redirect('/admin/login')->with($notification);
     }//End Method
 
     public function AdminLogin(){
@@ -205,7 +210,7 @@ class AdminController extends Controller
     public function AdminCourseDetails($id){
 
         $course = Course::find($id);
-       
+
         return view('admin.backend.courses.course_details',compact('course'));
 
 
